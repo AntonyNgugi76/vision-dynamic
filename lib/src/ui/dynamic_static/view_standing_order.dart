@@ -26,6 +26,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
 
   @override
   void initState() {
+    _apiService.fetchStandingOrder();
     super.initState();
   }
 
@@ -355,6 +356,80 @@ extension ApiCall on APIService {
 
     return dynamicResponse;
   }
+  Future<DynamicResponse> fetchStandingOrder() async {
+    String? res;
+    DynamicResponse dynamicResponse =
+        DynamicResponse(status: StatusCode.unknown.name);
+    Map<String, dynamic> requestObj = {};
+    Map<String, dynamic> innerMap = {};
+    innerMap["MerchantID"] = "GETSILIST";
+    innerMap["ModuleID"] = "STANDINGORDERVIEWDETAILS";
+
+    requestObj[RequestParam.Paybill.name] = innerMap;
+
+    final route =
+        await _sharedPrefs.getRoute(RouteUrl.account.name.toLowerCase());
+    try {
+      res = await performDioRequest(
+          await dioRequestBodySetUp("PAYBILL",
+              objectMap: requestObj, isAuthenticate: false),
+          route: route);
+      dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+      logger.d("termination>>: $res");
+    } catch (e) {
+      // CommonUtils.showToast("Unable to get promotional images");
+      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      return dynamicResponse;
+    }
+
+    return dynamicResponse;
+  }
+//   if (results?.status == StatusCode.success.statusCode) {
+//   var list = results?.dynamicList;
+//   AppLogger.appLogD(tag: "Standing orders", message: list);
+//   if (list != []) {
+//   list?.forEach((order) {
+//   try {
+//   Map<String, dynamic> orderJson = order;
+//   orders.add(StandingOrder.fromJson(orderJson));
+//   } catch (e) {
+//   AppLogger.appLogE(
+//   tag: "Add standing order error", message: e.toString());
+//   }
+//   });
+//   }
+//   }
+//
+//   return orders;
+// }
+  // Future<DynamicResponse> terminateStandingOrder() async {
+  //   String? res;
+  //   DynamicResponse dynamicResponse =
+  //       DynamicResponse(status: StatusCode.unknown.name);
+  //   Map<String, dynamic> requestObj = {};
+  //   Map<String, dynamic> innerMap = {};
+  //   innerMap["MerchantID"] = "ADDSTANDINGINSTRUCTIONS";
+  //   innerMap["INFOFIELD10"] = "R";
+  //
+  //   requestObj[RequestParam.Paybill.name] = innerMap;
+  //
+  //   final route =
+  //       await _sharedPrefs.getRoute(RouteUrl.account.name.toLowerCase());
+  //   try {
+  //     res = await performDioRequest(
+  //         await dioRequestBodySetUp("PAYBILL",
+  //             objectMap: requestObj, isAuthenticate: false),
+  //         route: route);
+  //     dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+  //     logger.d("termination>>: $res");
+  //   } catch (e) {
+  //     // CommonUtils.showToast("Unable to get promotional images");
+  //     AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+  //     return dynamicResponse;
+  //   }
+  //
+  //   return dynamicResponse;
+  // }
 
   // Future<DynamicResponse> viewStandingOrder() async {
   //   String? res;
