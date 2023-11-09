@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable, unnecessary_const
 
+import 'dart:convert';
+
 import 'package:blur/blur.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:craft_dynamic/src/network/dynamic_request.dart';
@@ -7,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 final _dynamicRequest = DynamicFormRequest();
+final _sharedPrefs = CommonSharedPref();
+final _apiService = APIService();
 
 class ViewStandingOrder extends StatefulWidget {
   final ModuleItem moduleItem;
@@ -286,9 +290,18 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
   }
 
   _confirmDeleteAction(BuildContext context, StandingOrder standingOrder) {
-    return AlertUtil.showAlertDialog(context,
-        "Confirm hide of Standing order for debit account ${standingOrder.debitAccount} with amount ${standingOrder.amount}",
-        isConfirm: true, title: "Confirm", confirmButtonText: "Hide");
+    return AlertUtil.showAlertDialog(
+      context,
+      "Confirm Termination of Standing order for debit account ${standingOrder.debitAccount} with amount ${standingOrder.amount}",
+      isConfirm: true,
+      title: "Confirm",
+      confirmButtonText: "Terminate",
+    ).then((value) {
+      _apiService.terminateStandingOrder().then((value) {
+        debugPrint('termination>>>> $value');
+
+      });
+    });
   }
 }
 
@@ -309,4 +322,35 @@ class RowItem extends StatelessWidget {
           ],
         ),
       ]);
+}
+
+extension ApiCall on APIService {
+  Future<DynamicResponse> terminateStandingOrder() async {
+    String? res;
+    DynamicResponse dynamicResponse =
+        DynamicResponse(status: StatusCode.unknown.name);
+    Map<String, dynamic> requestObj = {};
+    Map<String, dynamic> innerMap = {};
+    innerMap["MerchantID"] = "ADDSTANDINGINSTRUCTIONS";
+    innerMap["INFOFIELD10"] = "R";
+
+    requestObj[RequestParam.Paybill.name] = innerMap;
+
+    final route =
+        await _sharedPrefs.getRoute(RouteUrl.account.name.toLowerCase());
+    try {
+      res = await performDioRequest(
+          await dioRequestBodySetUp("PAYBILL",
+              objectMap: requestObj, isAuthenticate: false),
+          route: route);
+      dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+      logger.d("termination>>: $res");
+    } catch (e) {
+      // CommonUtils.showToast("Unable to get promotional images");
+      AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+      return dynamicResponse;
+    }
+
+    return dynamicResponse;
+  }
 }
