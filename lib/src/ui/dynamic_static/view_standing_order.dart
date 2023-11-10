@@ -67,7 +67,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
                       DynamicResponse dy = snapshot.data;
                       List? st = dy.standingOrderList;
                       print('>>>>>Order>>>$st');
-                      SILIST silist = list;
+                      // SILIST silist = list;
                       // var one = silist.amount;
                       // var two = silist.
                       if (list != null && list.isNotEmpty) {
