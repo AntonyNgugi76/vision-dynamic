@@ -306,7 +306,8 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       confirmButtonText: "Terminate",
     ).then((value) {
       Navigator.pop(context);
-      _apiService.terminateStandingOrder().then((value) {
+      _apiService.terminateStandingOrder();
+          // .then((value) {
         debugPrint('terminationValue>>>> $value');
         debugPrint('terminationValue>>>> ${value.status}');
         // if(value.status == StatusCode.success.statusCode){
