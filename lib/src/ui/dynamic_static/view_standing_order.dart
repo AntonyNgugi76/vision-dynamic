@@ -230,15 +230,15 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                         ),
                         IconButton(
                             onPressed: () {
-                              // _confirmDeleteAction(
-                              //         context, widget.standingOrder)
-                              //     .then((value) {
-                              //   if (value) {
-                              //     // isDeletingStandingOrder.value = true;
-                              //     _deleteStandingOrder(widget.standingOrder,
-                              //         widget.moduleItem, context);
-                              //   }
-                              // });
+                              _confirmDeleteAction(
+                                      context, widget.standingOrder)
+                                  .then((value) {
+                                if (value) {
+                                  // isDeletingStandingOrder.value = true;
+                                  // _deleteStandingOrder(,
+                                  //     widget.moduleItem, context);
+                                }
+                              });
                             },
                             style: ButtonStyle(
                                 minimumSize: MaterialStateProperty.all(
@@ -268,45 +268,54 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                 )))));
   }
 
-  _deleteStandingOrder(
-      StandingOrder standingOrder, ModuleItem moduleItem, context) async {
-    DynamicInput.formInputValues.clear();
-    DynamicInput.formInputValues
-        .addAll({"INFOFIELD1": standingOrder.standingOrderID});
-    DynamicInput.formInputValues
-        .addAll({RequestParam.MerchantID.name: moduleItem.merchantID});
-    DynamicInput.formInputValues
-        .addAll({RequestParam.HEADER.name: "DELETESTANDINGORDER"});
+  // _deleteStandingOrder(
+  //     SILIST standingOrder, ModuleItem moduleItem, context) async {
+  //   DynamicInput.formInputValues.clear();
+  //   DynamicInput.formInputValues
+  //       .addAll({"INFOFIELD1": standingOrder.standingOrderID});
+  //   DynamicInput.formInputValues
+  //       .addAll({RequestParam.MerchantID.name: moduleItem.merchantID});
+  //   DynamicInput.formInputValues
+  //       .addAll({RequestParam.HEADER.name: "DELETESTANDINGORDER"});
+  //
+  //   await _dynamicRequest
+  //       .dynamicRequest(moduleItem,
+  //           dataObj: DynamicInput.formInputValues,
+  //           context: context,
+  //           listType: ListType.ViewOrderList)
+  //       .then((value) {
+  //     isDeletingStandingOrder.value = false;
+  //     if (value?.status == StatusCode.success.statusCode) {
+  //       CommonUtils.showToast("Standing order hidden successfully");
+  //       widget.refreshParent();
+  //     } else {
+  //       AlertUtil.showAlertDialog(
+  //         context,
+  //         value?.message ?? "Unable to hide standing Order",
+  //       );
+  //     }
+  //   });
+  // }
 
-    await _dynamicRequest
-        .dynamicRequest(moduleItem,
-            dataObj: DynamicInput.formInputValues,
-            context: context,
-            listType: ListType.ViewOrderList)
-        .then((value) {
-      isDeletingStandingOrder.value = false;
-      if (value?.status == StatusCode.success.statusCode) {
-        CommonUtils.showToast("Standing order hidden successfully");
-        widget.refreshParent();
-      } else {
-        AlertUtil.showAlertDialog(
-          context,
-          value?.message ?? "Unable to hide standing Order",
-        );
-      }
-    });
-  }
-
-  _confirmDeleteAction(BuildContext context, StandingOrder standingOrder) {
+  _confirmDeleteAction(BuildContext context, SILIST standingOrder) {
     return AlertUtil.showAlertDialog(
       context,
-      "Confirm Termination of Standing order for debit account ${standingOrder.debitAccount} with amount ${standingOrder.amount}",
+      "Confirm Termination of Standing order for debit account ${standingOrder.creditAccountID} with amount ${standingOrder.amount}",
       isConfirm: true,
       title: "Confirm",
       confirmButtonText: "Terminate",
     ).then((value) {
+      Navigator.pop(context);
       _apiService.terminateStandingOrder().then((value) {
         debugPrint('termination>>>> $value');
+        if(value.status == StatusCode.success.statusCode){
+          AlertUtil.showAlertDialog(context, value.message.toString());
+        }
+        else{
+          AlertUtil.showAlertDialog(context, value.message.toString());
+
+        }
+
 
       });
     });
