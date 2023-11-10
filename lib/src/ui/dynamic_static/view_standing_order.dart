@@ -54,34 +54,34 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
         ),
         body: Stack(
           children: [
-            FutureBuilder<DynamicResponse>(
+            FutureBuilder<DynamicResponse?>(
                 future: _apiService.fetchStandingOrder(),
                 builder: (BuildContext context,
-                    AsyncSnapshot snapshot) {
+                    AsyncSnapshot<DynamicResponse?> snapshot) {
                   Widget child = Center(
                     child: LoadUtil(),
                   );
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
-                      var list = snapshot.data;
-                      DynamicResponse dy = snapshot.data;
-                      List? st = dy.standingOrderList;
+                      // var list = snapshot.data;
+                      DynamicResponse? dy = snapshot.data;
+                      List? st = dy!.standingOrderList;
                       print('>>>>>Order>>>$st');
                       // SILIST silist = list;
                       // var one = silist.amount;
                       // var two = silist.
-                      if (list != null && list.isNotEmpty) {
-                        child = ListView.builder(
-                          itemCount: list.length,
-                          itemBuilder: (context, index) {
-                            return StandingOrderItem(
-                              standingOrder: list[index],
-                              moduleItem: widget.moduleItem,
-                              refreshParent: refresh,
-                            );
-                          },
-                        );
-                      } else {
+                      // if (list != null && list.isNotEmpty) {
+                      //   child = ListView.builder(
+                      //     itemCount: st?.length,
+                      //     itemBuilder: (context, index) {
+                      //       return StandingOrderItem(
+                      //         standingOrder: st?[index],
+                      //         moduleItem: widget.moduleItem,
+                      //         refreshParent: refresh,
+                      //       );
+                      //     // },
+                      //   );
+                      // } else {
                         child = Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -101,7 +101,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
                           ),
                         );
                       }
-                    }
+                    // }
                   }
                   return child;
                 }),
