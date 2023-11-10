@@ -54,20 +54,21 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
         ),
         body: Stack(
           children: [
-            FutureBuilder(
+            FutureBuilder<SO>(
                 future: _apiService.fetchStandingOrder(),
                 builder: (BuildContext context,
-                    AsyncSnapshot snapshot) {
+                    AsyncSnapshot<SO> snapshot) {
                   Widget child = Center(
                     child: LoadUtil(),
                   );
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       // var list = snapshot.data;
-                      DynamicResponse? dy = snapshot.data;
-                      List? st = dy!.standingOrderList;
+                      SO? dy = snapshot.data;
+                      List<SILIST>? st = dy!.sILIST;
+
                       print('>>>>>Order>>>$st');
-                      print('>>>>>Order>>>${snapshot.data}');
+                      // print('>>>>>Order>>>${dy.}');
                       // SILIST silist = list;
                       // var one = silist.amount;
                       // var two = silist.
@@ -364,10 +365,11 @@ extension ApiCall on APIService {
 
     return dynamicResponse;
   }
-  Future fetchStandingOrder() async {
+  Future<SO> fetchStandingOrder() async {
     String? res;
-    DynamicResponse dynamicResponse =
-        DynamicResponse(status: StatusCode.unknown.name);
+    SO so=SO();
+    // DynamicResponse dynamicResponse =
+    //     DynamicResponse(status: StatusCode.unknown.name);
     Map<String, dynamic> requestObj = {};
     Map<String, dynamic> innerMap = {};
     innerMap["MerchantID"] = "GETSILIST";
@@ -382,15 +384,15 @@ extension ApiCall on APIService {
           await dioRequestBodySetUp("PAYBILL",
               objectMap: requestObj, isAuthenticate: false),
           route: route);
-      dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+       so = SO.fromJson(jsonDecode(res ?? "{}") ?? {});
       logger.d("fetch>>: $res");
     } catch (e) {
       // CommonUtils.showToast("Unable to get promotional images");
       AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
-      return dynamicResponse;
+      return so;
     }
 
-    return dynamicResponse;
+    return so;
   }
 //   if (results?.status == StatusCode.success.statusCode) {
 //   var list = results?.dynamicList;
