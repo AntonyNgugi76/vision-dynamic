@@ -2,8 +2,8 @@ class SO {
   String? status;
   String? message;
   String? formID;
-  int? nextFormSequence;
-  int? backStack;
+  var nextFormSequence;
+  var backStack;
   List<ResultsData>? resultsData;
   List<SILIST>? sILIST;
 
@@ -73,7 +73,7 @@ class ResultsData {
 }
 
 class SILIST {
-  int? amount;
+  var amount;
   String? frequency;
   String? noOfExecutions;
   String? firstExecutionDate;
