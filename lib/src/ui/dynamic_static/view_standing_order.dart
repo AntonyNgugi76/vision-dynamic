@@ -320,7 +320,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
 
 
       });
-    });
+    // });
   }
 }
 
