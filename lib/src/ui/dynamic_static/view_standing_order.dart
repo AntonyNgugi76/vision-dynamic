@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:blur/blur.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
+import 'package:craft_dynamic/model/so.dart';
 import 'package:craft_dynamic/src/network/dynamic_request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
@@ -26,7 +27,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
 
   @override
   void initState() {
-    _apiService.fetchStandingOrder();
+    // _apiService.fetchStandingOrder();
     super.initState();
   }
 
@@ -53,16 +54,22 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
         ),
         body: Stack(
           children: [
-            FutureBuilder<List<StandingOrder>?>(
-                future: _viewStandingOrder(),
+            FutureBuilder<DynamicResponse>(
+                future: _apiService.fetchStandingOrder(),
                 builder: (BuildContext context,
-                    AsyncSnapshot<List<StandingOrder>?> snapshot) {
+                    AsyncSnapshot snapshot) {
                   Widget child = Center(
                     child: LoadUtil(),
                   );
                   if (snapshot.connectionState == ConnectionState.done) {
                     if (snapshot.hasData) {
                       var list = snapshot.data;
+                      DynamicResponse dy = snapshot.data;
+                      List? st = dy.standingOrderList;
+                      print('>>>>>Order>>>$st');
+                      SILIST silist = list;
+                      // var one = silist.amount;
+                      // var two = silist.
                       if (list != null && list.isNotEmpty) {
                         child = ListView.builder(
                           itemCount: list.length,
