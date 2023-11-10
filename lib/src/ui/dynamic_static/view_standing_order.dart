@@ -307,14 +307,15 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
     ).then((value) {
       Navigator.pop(context);
       _apiService.terminateStandingOrder().then((value) {
-        debugPrint('termination>>>> $value');
-        if(value.status == StatusCode.success.statusCode){
-          AlertUtil.showAlertDialog(context, value.message.toString());
-        }
-        else{
-          AlertUtil.showAlertDialog(context, value.message.toString());
-
-        }
+        debugPrint('terminationValue>>>> $value');
+        debugPrint('terminationValue>>>> ${value.status}');
+        // if(value.status == StatusCode.success.statusCode){
+        //   AlertUtil.showAlertDialog(context, value.message.toString());
+        // }
+        // else{
+        //   AlertUtil.showAlertDialog(context, value.message.toString());
+        //
+        // }
 
 
       });
