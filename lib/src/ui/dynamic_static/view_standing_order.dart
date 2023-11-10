@@ -54,10 +54,10 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
         ),
         body: Stack(
           children: [
-            FutureBuilder<DynamicResponse?>(
+            FutureBuilder(
                 future: _apiService.fetchStandingOrder(),
                 builder: (BuildContext context,
-                    AsyncSnapshot<DynamicResponse?> snapshot) {
+                    AsyncSnapshot snapshot) {
                   Widget child = Center(
                     child: LoadUtil(),
                   );
@@ -67,6 +67,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
                       DynamicResponse? dy = snapshot.data;
                       List? st = dy!.standingOrderList;
                       print('>>>>>Order>>>$st');
+                      print('>>>>>Order>>>${snapshot.data}');
                       // SILIST silist = list;
                       // var one = silist.amount;
                       // var two = silist.
@@ -363,7 +364,7 @@ extension ApiCall on APIService {
 
     return dynamicResponse;
   }
-  Future<DynamicResponse> fetchStandingOrder() async {
+  Future fetchStandingOrder() async {
     String? res;
     DynamicResponse dynamicResponse =
         DynamicResponse(status: StatusCode.unknown.name);
