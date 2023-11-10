@@ -68,22 +68,18 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
                       List<SILIST>? st = dy!.sILIST;
 
                       print('>>>>>Order>>>$st');
-                      // print('>>>>>Order>>>${dy.}');
-                      // SILIST silist = list;
-                      // var one = silist.amount;
-                      // var two = silist.
-                      // if (list != null && list.isNotEmpty) {
-                      //   child = ListView.builder(
-                      //     itemCount: st?.length,
-                      //     itemBuilder: (context, index) {
-                      //       return StandingOrderItem(
-                      //         standingOrder: st?[index],
-                      //         moduleItem: widget.moduleItem,
-                      //         refreshParent: refresh,
-                      //       );
-                      //     // },
-                      //   );
-                      // } else {
+                      if (st != null && st.isNotEmpty) {
+                        child = ListView.builder(
+                          itemCount: st?.length,
+                          itemBuilder: (context, index) {
+                            return StandingOrderItem(
+                              standingOrder: st[index],
+                              moduleItem: widget.moduleItem,
+                              refreshParent: refresh,
+                            );
+                          },
+                        );
+                      } else {
                         child = Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
@@ -103,7 +99,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
                           ),
                         );
                       }
-                    // }
+                    }
                   }
                   return child;
                 }),
@@ -156,7 +152,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
 }
 
 class StandingOrderItem extends StatefulWidget {
-  StandingOrder standingOrder;
+  SILIST standingOrder;
   ModuleItem moduleItem;
   Function() refreshParent;
 
@@ -192,14 +188,14 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                       children: [
                         RowItem(
                           title: "Effective date",
-                          value: widget.standingOrder.effectiveDate,
+                          value: widget.standingOrder.firstExecutionDate,
                         ),
                         const SizedBox(
                           height: 12,
                         ),
                         RowItem(
                           title: "Debit Account",
-                          value: widget.standingOrder.debitAccount,
+                          value: widget.standingOrder.creditAccountID,
                         ),
                         const SizedBox(
                           height: 12,
@@ -211,16 +207,16 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                         const SizedBox(
                           height: 12,
                         ),
-                        RowItem(
-                          title: "Narration",
-                          value: widget.standingOrder.narration,
-                        ),
+                        // RowItem(
+                        //   title: "Narration",
+                        //   value: widget.standingOrder.narration,
+                        // ),
                         const SizedBox(
                           height: 12,
                         ),
                         RowItem(
                           title: "Frequency",
-                          value: widget.standingOrder.frequencyID,
+                          value: widget.standingOrder.frequency,
                         ),
                         const SizedBox(
                           height: 12,
@@ -234,15 +230,15 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                         ),
                         IconButton(
                             onPressed: () {
-                              _confirmDeleteAction(
-                                      context, widget.standingOrder)
-                                  .then((value) {
-                                if (value) {
-                                  isDeletingStandingOrder.value = true;
-                                  _deleteStandingOrder(widget.standingOrder,
-                                      widget.moduleItem, context);
-                                }
-                              });
+                              // _confirmDeleteAction(
+                              //         context, widget.standingOrder)
+                              //     .then((value) {
+                              //   if (value) {
+                              //     // isDeletingStandingOrder.value = true;
+                              //     _deleteStandingOrder(widget.standingOrder,
+                              //         widget.moduleItem, context);
+                              //   }
+                              // });
                             },
                             style: ButtonStyle(
                                 minimumSize: MaterialStateProperty.all(
