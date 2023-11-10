@@ -375,7 +375,7 @@ extension ApiCall on APIService {
               objectMap: requestObj, isAuthenticate: false),
           route: route);
       dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
-      logger.d("termination>>: $res");
+      logger.d("fetch>>: $res");
     } catch (e) {
       // CommonUtils.showToast("Unable to get promotional images");
       AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
