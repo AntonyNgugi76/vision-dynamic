@@ -311,7 +311,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
 
 
       // Navigator.pop(context);
-      // _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate);
+      _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate);
       //     // .then((value) {
       //   debugPrint('terminationValue>>>> $value');
       //   debugPrint('terminationValue>>>> ${value.status}');
