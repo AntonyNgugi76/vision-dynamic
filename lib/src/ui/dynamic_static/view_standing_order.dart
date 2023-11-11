@@ -305,8 +305,12 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       title: "Confirm",
       confirmButtonText: "Terminate",
     ).then((value) {
+
+
+
+
       // Navigator.pop(context);
-      _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate);
+      // _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate);
           // .then((value) {
         debugPrint('terminationValue>>>> $value');
         debugPrint('terminationValue>>>> ${value.status}');

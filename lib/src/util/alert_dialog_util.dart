@@ -154,4 +154,91 @@ class AlertUtil {
       },
     );
   }
+  static showModalBottomDialogPIN(context, message) {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+            padding:
+                const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 4),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12))),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                Pinput(
+                  onCompleted: (pin){
+                    print('....pin$pin');
+
+
+                  },
+                ),
+
+                WidgetFactory.buildButton(context, () {
+                  Navigator.of(context).pop();
+                }, "Proceed")
+              ],
+            ));
+      },
+    );
+
+  }
+  // _login({isBiometric = false}) {
+  //   ActivationResponse res;
+  //   if (_pinController.text.isEmpty || _pinController.length != 4) {
+  //     CommonUtils.showToast("Enter a valid PIN!");
+  //     Vibration.vibrate();
+  //     return;
+  //   }
+  //   if (_formKey.currentState!.validate()) {
+  //     setState(() {
+  //       _isLoading = true;
+  //     });
+  //     _authRepo.login(_pinController.text).then((value) {
+  //       setState(() {
+  //         _isLoading = false;
+  //       });
+  //       if (value.status == StatusCode.success.statusCode) {
+  //         _pinController.clear();
+  //         CommonUtils.navigateToRoute(
+  //             context: context, widget: const HomeScreen());
+  //       } else if (value.status == StatusCode.otp.statusCode) {
+  //         res = value;
+  //         _sharedPref.getCustomerMobile().then((value) {
+  //           if (value != null && value.toString().isNotEmpty) {
+  //             CommonUtils.navigateToRoute(
+  //                 context: context,
+  //                 widget: OTPScreen(
+  //                   mobileNumber: value,
+  //                   isCooporateVerify: true,
+  //                   customerCategory: res.customerCategory ?? "INDIVIDUAL",
+  //                 ));
+  //           }
+  //         });
+  //       } else if (value.status == StatusCode.setsecurityquestions.statusCode) {
+  //         _pinController.clear();
+  //         context.navigate(SecurityQuestionsScreen());
+  //       } else {
+  //         _pinController.clear();
+  //         if (value.status == StatusCode.setsecurityquestions.statusCode ||
+  //             value.status == StatusCode.changePin.statusCode) {
+  //           return;
+  //         }
+  //         AlertUtil.showAlertDialog(
+  //             context, value.message ?? "Kindly Try Again!",
+  //             title: "Login Error");
+  //       }
+  //     });
+  //   } else {
+  //     CommonUtils.showToast("Invalid pin!");
+  //     Vibration.vibrate();
+  //   }
+  // }
 }
