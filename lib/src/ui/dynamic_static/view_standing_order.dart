@@ -306,16 +306,15 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       confirmButtonText: "Terminate",
     ).then((value) {
       Navigator.pop(context);
-      AlertUtil.showModalBottomDialogPIN(context, 'Enter PIN');
 
 
 
 
       // Navigator.pop(context);
       // _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate);
-          // .then((value) {
-        debugPrint('terminationValue>>>> $value');
-        debugPrint('terminationValue>>>> ${value.status}');
+      //     // .then((value) {
+      //   debugPrint('terminationValue>>>> $value');
+      //   debugPrint('terminationValue>>>> ${value.status}');
         // if(value.status == StatusCode.success.statusCode){
         //   AlertUtil.showAlertDialog(context, value.message.toString());
         // }
