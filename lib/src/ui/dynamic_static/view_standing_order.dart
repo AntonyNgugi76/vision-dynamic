@@ -375,7 +375,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                           context, '$value.message.toString()'?? '');
                     }else{
                       AlertUtil.showAlertDialog(
-                          context, '$value.message.toString()'?? '');
+                          context, 'Termination has failed');
                     }
                   });
 
