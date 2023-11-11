@@ -372,10 +372,10 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
 
                     if (value.status == StatusCode.success.statusCode) {
                       AlertUtil.showAlertDialog(
-                          context, value.message.toString());
+                          context, '$value.message.toString()'?? '');
                     }else{
                       AlertUtil.showAlertDialog(
-                          context, value.message.toString());
+                          context, '$value.message.toString()'?? '');
                     }
                   });
 
