@@ -15,7 +15,6 @@ final _sharedPrefs = CommonSharedPref();
 final _apiService = APIService();
 
 class ViewStandingOrder extends StatefulWidget {
-
   final ModuleItem moduleItem;
 
   const ViewStandingOrder({required this.moduleItem, super.key});
@@ -58,8 +57,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
           children: [
             FutureBuilder<SO>(
                 future: _apiService.fetchStandingOrder(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<SO> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<SO> snapshot) {
                   Widget child = Center(
                     child: LoadUtil(),
                   );
@@ -118,8 +116,7 @@ class _ViewStandingOrderState extends State<ViewStandingOrder> {
     List<StandingOrder>? orders = [];
 
     DynamicInput.formInputValues.clear();
-    DynamicInput.formInputValues
-        .addAll({"MerchantID": 'GETSILIST'});
+    DynamicInput.formInputValues.addAll({"MerchantID": 'GETSILIST'});
     DynamicInput.formInputValues
         .addAll({"ModuleID": 'STANDINGORDERVIEWDETAILS'});
     DynamicInput.formInputValues.addAll({"HEADER": "VIEWSTANDINGORDER"});
@@ -170,7 +167,8 @@ class StandingOrderItem extends StatefulWidget {
 }
 
 class _StandingOrderItemState extends State<StandingOrderItem> {
-  TextEditingController _textEditingController= TextEditingController();
+  TextEditingController _textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -234,7 +232,9 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                         IconButton(
                             onPressed: () {
                               _confirmDeleteAction(
-                                      context, widget.standingOrder,_textEditingController)
+                                      context,
+                                      widget.standingOrder,
+                                      _textEditingController)
                                   .then((value) {
                                 if (value) {
                                   // isDeletingStandingOrder.value = true;
@@ -300,7 +300,8 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
   //   });
   // }
 
-  _confirmDeleteAction(BuildContext context, SILIST standingOrder, TextEditingController pin) {
+  _confirmDeleteAction(
+      BuildContext context, SILIST standingOrder, TextEditingController pin) {
     return AlertUtil.showAlertDialog(
       context,
       "Confirm Termination of Standing order for debit account ${standingOrder.creditAccountID} with amount ${standingOrder.amount}",
@@ -309,27 +310,26 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       confirmButtonText: "Terminate",
     ).then((value) {
       Navigator.pop(context);
-      showModalBottomDialogPIN(context, 'Enter PIN',pin,standingOrder );
-
+      showModalBottomDialogPIN(context, 'Enter PIN', pin, standingOrder);
 
       // Navigator.pop(context);
 
       //     // .then((value) {
       //   debugPrint('terminationValue>>>> $value');
       //   debugPrint('terminationValue>>>> ${value.status}');
-        // if(value.status == StatusCode.success.statusCode){
-        //   AlertUtil.showAlertDialog(context, value.message.toString());
-        // }
-        // else{
-        //   AlertUtil.showAlertDialog(context, value.message.toString());
-        //
-        // }
-
-
-      });
+      // if(value.status == StatusCode.success.statusCode){
+      //   AlertUtil.showAlertDialog(context, value.message.toString());
+      // }
+      // else{
+      //   AlertUtil.showAlertDialog(context, value.message.toString());
+      //
+      // }
+    });
     // });
   }
-  static showModalBottomDialogPIN(context, message, TextEditingController controller, SILIST standingOrder) {
+
+  static showModalBottomDialogPIN(context, message,
+      TextEditingController controller, SILIST standingOrder) {
     showModalBottomSheet<void>(
       isScrollControlled: true,
       shape: const RoundedRectangleBorder(
@@ -340,7 +340,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       builder: (BuildContext context) {
         return Container(
             padding:
-            const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 4),
+                const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 4),
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
@@ -348,20 +348,29 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
             child: ListView(
               shrinkWrap: true,
               children: [
-                SizedBox(height:10),
-                Text('Enter PIN'),
-                SizedBox(height:10),
+                SizedBox(height: 10),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [SizedBox(), Text('Enter PIN'), SizedBox()]),
+                SizedBox(height: 10),
                 Pinput(
                   controller: controller,
-                  onCompleted: (pin){
-                    print('....pin$pin');
-
-
-                  },
                 ),
-
+                SizedBox(height: 10),
                 WidgetFactory.buildButton(context, () {
-                  _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate, controller.text);
+                  _apiService
+                      .terminateStandingOrder(
+                          standingOrder.creditAccountID,
+                          standingOrder.amount,
+                          standingOrder.firstExecutionDate,
+                          standingOrder.frequency,
+                          standingOrder.lastExecutionDate,
+                          controller.text)
+                      .then((value) {
+                    Navigator.pop(context);
+                    AlertUtil.showAlertDialog(
+                        context, value.message.toString());
+                  });
 
                   // Navigator.of(context).pop();
                 }, "Proceed")
@@ -369,9 +378,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
             ));
       },
     );
-
   }
-
 }
 
 class RowItem extends StatelessWidget {
@@ -394,7 +401,8 @@ class RowItem extends StatelessWidget {
 }
 
 extension ApiCall on APIService {
-  Future<DynamicResponse> terminateStandingOrder( account, amount,  startDate, frequency, endDate, String pin) async {
+  Future<DynamicResponse> terminateStandingOrder(
+      account, amount, startDate, frequency, endDate, String pin) async {
     String? res;
     DynamicResponse dynamicResponse =
         DynamicResponse(status: StatusCode.unknown.name);
@@ -429,9 +437,10 @@ extension ApiCall on APIService {
 
     return dynamicResponse;
   }
+
   Future<SO> fetchStandingOrder() async {
     String? res;
-    SO so=SO();
+    SO so = SO();
     // DynamicResponse dynamicResponse =
     //     DynamicResponse(status: StatusCode.unknown.name);
     Map<String, dynamic> requestObj = {};
@@ -448,7 +457,7 @@ extension ApiCall on APIService {
           await dioRequestBodySetUp("PAYBILL",
               objectMap: requestObj, isAuthenticate: false),
           route: route);
-       so = SO.fromJson(jsonDecode(res ?? "{}") ?? {});
+      so = SO.fromJson(jsonDecode(res ?? "{}") ?? {});
       logger.d("fetch>>: $res");
     } catch (e) {
       // CommonUtils.showToast("Unable to get promotional images");
@@ -476,92 +485,92 @@ extension ApiCall on APIService {
 //
 //   return orders;
 // }
-  // Future<DynamicResponse> terminateStandingOrder() async {
-  //   String? res;
-  //   DynamicResponse dynamicResponse =
-  //       DynamicResponse(status: StatusCode.unknown.name);
-  //   Map<String, dynamic> requestObj = {};
-  //   Map<String, dynamic> innerMap = {};
-  //   innerMap["MerchantID"] = "ADDSTANDINGINSTRUCTIONS";
-  //   innerMap["INFOFIELD10"] = "R";
-  //
-  //   requestObj[RequestParam.Paybill.name] = innerMap;
-  //
-  //   final route =
-  //       await _sharedPrefs.getRoute(RouteUrl.account.name.toLowerCase());
-  //   try {
-  //     res = await performDioRequest(
-  //         await dioRequestBodySetUp("PAYBILL",
-  //             objectMap: requestObj, isAuthenticate: false),
-  //         route: route);
-  //     dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
-  //     logger.d("termination>>: $res");
-  //   } catch (e) {
-  //     // CommonUtils.showToast("Unable to get promotional images");
-  //     AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
-  //     return dynamicResponse;
-  //   }
-  //
-  //   return dynamicResponse;
-  // }
+// Future<DynamicResponse> terminateStandingOrder() async {
+//   String? res;
+//   DynamicResponse dynamicResponse =
+//       DynamicResponse(status: StatusCode.unknown.name);
+//   Map<String, dynamic> requestObj = {};
+//   Map<String, dynamic> innerMap = {};
+//   innerMap["MerchantID"] = "ADDSTANDINGINSTRUCTIONS";
+//   innerMap["INFOFIELD10"] = "R";
+//
+//   requestObj[RequestParam.Paybill.name] = innerMap;
+//
+//   final route =
+//       await _sharedPrefs.getRoute(RouteUrl.account.name.toLowerCase());
+//   try {
+//     res = await performDioRequest(
+//         await dioRequestBodySetUp("PAYBILL",
+//             objectMap: requestObj, isAuthenticate: false),
+//         route: route);
+//     dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+//     logger.d("termination>>: $res");
+//   } catch (e) {
+//     // CommonUtils.showToast("Unable to get promotional images");
+//     AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+//     return dynamicResponse;
+//   }
+//
+//   return dynamicResponse;
+// }
 
-  // Future<DynamicResponse> viewStandingOrder() async {
-  //   String? res;
-  //   DynamicResponse dynamicResponse =
-  //       DynamicResponse(status: StatusCode.unknown.name);
-  //   Map<String, dynamic> requestObj = {};
-  //   Map<String, dynamic> innerMap = {};
-  //   innerMap["MerchantID"] = "GETSILIST";
-  //   innerMap["ModuleID"] = "STANDINGORDERVIEWDETAILS";
-  //
-  //   requestObj[RequestParam.Paybill.name] = innerMap;
-  //
-  //   final route =
-  //       await _sharedPrefs.getRoute(RouteUrl.account.name.toLowerCase());
-  //   try {
-  //     res = await performDioRequest(
-  //         await dioRequestBodySetUp("PAYBILL",
-  //             objectMap: requestObj, isAuthenticate: false),
-  //         route: route);
-  //     dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
-  //     logger.d("standing>>: $res");
-  //   } catch (e) {
-  //     // CommonUtils.showToast("Unable to get promotional images");
-  //     AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
-  //     return dynamicResponse;
-  //   }
-  //
-  //   return dynamicResponse;
-  // }
-  // Future<List<StandingOrder>?> _viewStandingOrder() async {
-  //     List<StandingOrder>? orders = [];
-  //
-  //     DynamicInput.formInputValues.clear();
-  //     DynamicInput.formInputValues
-  //         .addAll({"MerchantID": ""});
-  //     DynamicInput.formInputValues.addAll({"HEADER": "VIEWSTANDINGORDER"});
-  //     // DynamicInput.formInputValues.add({"INFOFIELD1": "TRANSFER"});
-  //     var results = await _dynamicRequest.dynamicRequest(widget.moduleItem,
-  //         dataObj: DynamicInput.formInputValues,
-  //         context: context,
-  //         listType: ListType.ViewOrderList);
-  //
-  //     if (results?.status == StatusCode.success.statusCode) {
-  //       var list = results?.dynamicList;
-  //       AppLogger.appLogD(tag: "Standing orders", message: list);
-  //       if (list != []) {
-  //         list?.forEach((order) {
-  //           try {
-  //             Map<String, dynamic> orderJson = order;
-  //             orders.add(StandingOrder.fromJson(orderJson));
-  //           } catch (e) {
-  //             AppLogger.appLogE(
-  //                 tag: "Add standing order error", message: e.toString());
-  //           }
-  //         });
-  //       }
-  //     }
-  //
-  //     return orders;
-  //   }
+// Future<DynamicResponse> viewStandingOrder() async {
+//   String? res;
+//   DynamicResponse dynamicResponse =
+//       DynamicResponse(status: StatusCode.unknown.name);
+//   Map<String, dynamic> requestObj = {};
+//   Map<String, dynamic> innerMap = {};
+//   innerMap["MerchantID"] = "GETSILIST";
+//   innerMap["ModuleID"] = "STANDINGORDERVIEWDETAILS";
+//
+//   requestObj[RequestParam.Paybill.name] = innerMap;
+//
+//   final route =
+//       await _sharedPrefs.getRoute(RouteUrl.account.name.toLowerCase());
+//   try {
+//     res = await performDioRequest(
+//         await dioRequestBodySetUp("PAYBILL",
+//             objectMap: requestObj, isAuthenticate: false),
+//         route: route);
+//     dynamicResponse = DynamicResponse.fromJson(jsonDecode(res ?? "{}") ?? {});
+//     logger.d("standing>>: $res");
+//   } catch (e) {
+//     // CommonUtils.showToast("Unable to get promotional images");
+//     AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
+//     return dynamicResponse;
+//   }
+//
+//   return dynamicResponse;
+// }
+// Future<List<StandingOrder>?> _viewStandingOrder() async {
+//     List<StandingOrder>? orders = [];
+//
+//     DynamicInput.formInputValues.clear();
+//     DynamicInput.formInputValues
+//         .addAll({"MerchantID": ""});
+//     DynamicInput.formInputValues.addAll({"HEADER": "VIEWSTANDINGORDER"});
+//     // DynamicInput.formInputValues.add({"INFOFIELD1": "TRANSFER"});
+//     var results = await _dynamicRequest.dynamicRequest(widget.moduleItem,
+//         dataObj: DynamicInput.formInputValues,
+//         context: context,
+//         listType: ListType.ViewOrderList);
+//
+//     if (results?.status == StatusCode.success.statusCode) {
+//       var list = results?.dynamicList;
+//       AppLogger.appLogD(tag: "Standing orders", message: list);
+//       if (list != []) {
+//         list?.forEach((order) {
+//           try {
+//             Map<String, dynamic> orderJson = order;
+//             orders.add(StandingOrder.fromJson(orderJson));
+//           } catch (e) {
+//             AppLogger.appLogE(
+//                 tag: "Add standing order error", message: e.toString());
+//           }
+//         });
+//       }
+//     }
+//
+//     return orders;
+//   }
 }
