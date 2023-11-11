@@ -305,6 +305,8 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       title: "Confirm",
       confirmButtonText: "Terminate",
     ).then((value) {
+      Navigator.pop(context);
+      AlertUtil.showModalBottomDialogPIN(context, 'Enter PIN');
 
 
 
