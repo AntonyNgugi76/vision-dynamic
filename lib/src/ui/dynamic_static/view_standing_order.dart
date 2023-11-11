@@ -423,7 +423,7 @@ extension ApiCall on APIService {
     innerMap["INFOFIELD7"] = frequency;
     innerMap["INFOFIELD8"] = endDate;
     innerMap["INFOFIELD10"] = "R";
-    requestObj["EncryptedFields"] = {"PIN": "$pin"};
+    requestObj["EncryptedFields"] = {"PIN": "${CryptLib.encrypt(pin)}"};
 
     // encryptedPin: CryptLib.encryptField(pin);
 
