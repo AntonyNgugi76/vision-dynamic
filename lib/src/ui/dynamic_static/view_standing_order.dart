@@ -8,6 +8,7 @@ import 'package:craft_dynamic/model/so.dart';
 import 'package:craft_dynamic/src/network/dynamic_request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:pinput/pinput.dart';
 
 final _dynamicRequest = DynamicFormRequest();
 final _sharedPrefs = CommonSharedPref();
@@ -308,11 +309,11 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       confirmButtonText: "Terminate",
     ).then((value) {
       Navigator.pop(context);
-      AlertUtil.showModalBottomDialogPIN(context, 'Enter PIN',pin);
+      showModalBottomDialogPIN(context, 'Enter PIN',pin,standingOrder );
 
 
       // Navigator.pop(context);
-      _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate, pin.text);
+
       //     // .then((value) {
       //   debugPrint('terminationValue>>>> $value');
       //   debugPrint('terminationValue>>>> ${value.status}');
@@ -328,6 +329,49 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       });
     // });
   }
+  static showModalBottomDialogPIN(context, message, TextEditingController controller, SILIST standingOrder) {
+    showModalBottomSheet<void>(
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(18.0), topRight: Radius.circular(18.0)),
+      ),
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+            padding:
+            const EdgeInsets.only(left: 12, right: 12, top: 12, bottom: 4),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12))),
+            child: ListView(
+              shrinkWrap: true,
+              children: [
+                SizedBox(height:10),
+                Text('Enter PIN'),
+                SizedBox(height:10),
+                Pinput(
+                  controller: controller,
+                  onCompleted: (pin){
+                    print('....pin$pin');
+
+
+                  },
+                ),
+
+                WidgetFactory.buildButton(context, () {
+                  _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate, controller.text);
+
+                  // Navigator.of(context).pop();
+                }, "Proceed")
+              ],
+            ));
+      },
+    );
+
+  }
+
 }
 
 class RowItem extends StatelessWidget {
