@@ -371,11 +371,11 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                     Navigator.pop(context);
 
                     if (value.status == StatusCode.success.statusCode) {
-                      AlertUtil.showAlertDialog(
-                          context, '$value.message.toString()'?? '');
+                      // AlertUtil.showAlertDialog(
+                      //     context, '$value.message.toString()'?? '');
                     }else{
-                      AlertUtil.showAlertDialog(
-                          context, 'Termination has failed');
+                      // AlertUtil.showAlertDialog(
+                      //     context, 'Termination has failed');
                     }
                   });
 
@@ -415,15 +415,17 @@ extension ApiCall on APIService {
         DynamicResponse(status: StatusCode.unknown.name);
     Map<String, dynamic> requestObj = {};
     Map<String, dynamic> innerMap = {};
-    innerMap["MerchantID"] = "ADDSTANDINGINSTRUCTIONS";
-    innerMap["MerchantID"] = "ADDSTANDINGINSTRUCTIONS";
+    innerMap["MerchantID"] = "STOPSTANDINGINSTRUCTIONS";
+    innerMap["ModuleID"] = "STANDINGORDERVIEWDETAILS";
     innerMap["AMOUNT"] = amount;
     innerMap["BANKACCOUNTID"] = account;
     innerMap["INFOFIELD6"] = startDate;
     innerMap["INFOFIELD7"] = frequency;
     innerMap["INFOFIELD8"] = endDate;
     innerMap["INFOFIELD10"] = "R";
-    encryptedPin: CryptLib.encryptField(pin);
+    requestObj["EncryptedFields"] = {"PIN": "$pin"};
+
+    // encryptedPin: CryptLib.encryptField(pin);
 
     // innerMap["PIN"] = CryptLib.encryptField(pin);
     // "EncryptedFields":CryptLib.encryptField(pin);
