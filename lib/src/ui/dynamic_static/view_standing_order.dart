@@ -311,11 +311,8 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       AlertUtil.showModalBottomDialogPIN(context, 'Enter PIN',pin);
 
 
-
-
-
       // Navigator.pop(context);
-      // _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate, pin.text);
+      _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate, pin.text);
       //     // .then((value) {
       //   debugPrint('terminationValue>>>> $value');
       //   debugPrint('terminationValue>>>> ${value.status}');
