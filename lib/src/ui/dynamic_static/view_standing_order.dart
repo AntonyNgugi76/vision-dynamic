@@ -344,7 +344,7 @@ class RowItem extends StatelessWidget {
 }
 
 extension ApiCall on APIService {
-  Future<DynamicResponse> terminateStandingOrder(String? account,String? amount, String? startDate,String? frequency,String? endDate) async {
+  Future<DynamicResponse> terminateStandingOrder( account, amount,  startDate, frequency, endDate) async {
     String? res;
     DynamicResponse dynamicResponse =
         DynamicResponse(status: StatusCode.unknown.name);
