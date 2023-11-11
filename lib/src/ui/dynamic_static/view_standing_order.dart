@@ -14,6 +14,7 @@ final _sharedPrefs = CommonSharedPref();
 final _apiService = APIService();
 
 class ViewStandingOrder extends StatefulWidget {
+
   final ModuleItem moduleItem;
 
   const ViewStandingOrder({required this.moduleItem, super.key});
@@ -168,6 +169,7 @@ class StandingOrderItem extends StatefulWidget {
 }
 
 class _StandingOrderItemState extends State<StandingOrderItem> {
+  TextEditingController _textEditingController= TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -231,7 +233,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                         IconButton(
                             onPressed: () {
                               _confirmDeleteAction(
-                                      context, widget.standingOrder)
+                                      context, widget.standingOrder,_textEditingController)
                                   .then((value) {
                                 if (value) {
                                   // isDeletingStandingOrder.value = true;
@@ -297,7 +299,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
   //   });
   // }
 
-  _confirmDeleteAction(BuildContext context, SILIST standingOrder) {
+  _confirmDeleteAction(BuildContext context, SILIST standingOrder, TextEditingController pin) {
     return AlertUtil.showAlertDialog(
       context,
       "Confirm Termination of Standing order for debit account ${standingOrder.creditAccountID} with amount ${standingOrder.amount}",
@@ -306,14 +308,14 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       confirmButtonText: "Terminate",
     ).then((value) {
       Navigator.pop(context);
-      AlertUtil.showModalBottomDialogPIN(context, 'Enter PIN');
+      AlertUtil.showModalBottomDialogPIN(context, 'Enter PIN',pin);
 
 
 
 
 
       // Navigator.pop(context);
-      // _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate);
+      // _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate, pin.text);
       //     // .then((value) {
       //   debugPrint('terminationValue>>>> $value');
       //   debugPrint('terminationValue>>>> ${value.status}');
@@ -351,7 +353,7 @@ class RowItem extends StatelessWidget {
 }
 
 extension ApiCall on APIService {
-  Future<DynamicResponse> terminateStandingOrder( account, amount,  startDate, frequency, endDate) async {
+  Future<DynamicResponse> terminateStandingOrder( account, amount,  startDate, frequency, endDate, String pin) async {
     String? res;
     DynamicResponse dynamicResponse =
         DynamicResponse(status: StatusCode.unknown.name);
@@ -365,6 +367,7 @@ extension ApiCall on APIService {
     innerMap["INFOFIELD7"] = frequency;
     innerMap["INFOFIELD8"] = endDate;
     innerMap["INFOFIELD10"] = "R";
+    innerMap["PIN"] = CryptLib.encryptField(pin);
 
     requestObj[RequestParam.Paybill.name] = innerMap;
 

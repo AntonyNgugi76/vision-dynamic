@@ -154,7 +154,7 @@ class AlertUtil {
       },
     );
   }
-static showModalBottomDialogPIN(context, message) {
+static showModalBottomDialogPIN(context, message, TextEditingController controller) {
   showModalBottomSheet<void>(
     isScrollControlled: true,
     shape: const RoundedRectangleBorder(
@@ -173,7 +173,11 @@ static showModalBottomDialogPIN(context, message) {
           child: ListView(
             shrinkWrap: true,
             children: [
+              SizedBox(height:10),
+              Text('Enter PIN'),
+              SizedBox(height:10),
               Pinput(
+                controller: controller,
                 onCompleted: (pin){
                   print('....pin$pin');
 
