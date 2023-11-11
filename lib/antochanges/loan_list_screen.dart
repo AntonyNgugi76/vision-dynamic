@@ -14,6 +14,12 @@ class LoanListScreen extends StatefulWidget {
 
 class _LoanListScreenState extends State<LoanListScreen> {
   final _apiServices = APIService();
+  @override
+  void initState() {
+    _apiServices.getLoanInfo();
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +68,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                     MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Recepient:',
+                                        'Loan ID:',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -80,7 +86,24 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                     MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Account:',
+                                        'OutstandingPrincipal:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text("${'emails[index].accountNumber'},"),
+                                    ],
+                                  )),Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 10, right: 10, top: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Dispersed Amount:',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -95,10 +118,20 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                       left: 10, right: 10, top: 10),
                                   child: Row(
                                     mainAxisAlignment:
+
+                                    // LoanID
+                                    // ,DispersedAmount
+                                    // ,OutstandingPrincipal
+                                    // ,OutstandingInterest
+                                    // ,RepaymentFrequency
+                                    // ,InstallmentAmount
+                                    // ,InstallmentStartDate
+                                    // ,ValueDate
+                                    // ,MaturityDate
                                     MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Frequency:',
+                                        'Outstanding Interest:',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -118,7 +151,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                     MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Subscribed On:',
+                                        'Installment Amount:',
                                         style: TextStyle(
                                             fontWeight: FontWeight.bold),
                                       ),
@@ -164,8 +197,18 @@ extension ApiCall on APIService {
     DynamicResponse(status: StatusCode.unknown.name);
     Map<String, dynamic> requestObj = {};
     Map<String, dynamic> innerMap = {};
-    innerMap["MerchantID"] = "SUBSCRIBEDEMAILLIST";
-    innerMap["ModuleID"] = "VIEWEMAILSUBSCRIPTIONS";
+    // LoanID
+    // ,DispersedAmount
+    // ,OutstandingPrincipal
+    // ,OutstandingInterest
+    // ,RepaymentFrequency
+    // ,InstallmentAmount
+    // ,InstallmentStartDate
+    // ,ValueDate
+    // ,MaturityDate
+
+    innerMap["MerchantID"] = "GETCLIENTLOANACCOUNTS";
+    innerMap["ModuleID"] = "LOANINFORMATION";
     requestObj[RequestParam.Paybill.name] = innerMap;
 
     final route = await _sharedPrefs.getRoute(RouteUrl.account.name.toLowerCase());
@@ -175,7 +218,7 @@ extension ApiCall on APIService {
               objectMap: requestObj, isAuthenticate: false),
           route: route);
       // emailList = EmailsList.fromJson(jsonDecode(res ?? "{}") ?? {});
-      logger.d("emailList>>: $res");
+      logger.d("loanLisst>>: $res");
     } catch (e) {
       // CommonUtils.showToast("Unable to get promotional images");
       AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
