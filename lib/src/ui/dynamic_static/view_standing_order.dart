@@ -367,9 +367,13 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                           standingOrder.lastExecutionDate,
                           controller.text)
                       .then((value) {
+                      debugPrint('value>>>>>>${value.status}');
                     Navigator.pop(context);
-                    AlertUtil.showAlertDialog(
-                        context, value.toString());
+
+                    if (value.status == StatusCode.success.statusCode) {
+                      AlertUtil.showAlertDialog(
+                          context, value.message.toString());
+                    }
                   });
 
                   // Navigator.of(context).pop();
