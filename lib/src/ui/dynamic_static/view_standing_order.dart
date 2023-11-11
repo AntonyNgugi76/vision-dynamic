@@ -3,8 +3,8 @@
 import 'dart:convert';
 
 import 'package:blur/blur.dart';
+import 'package:craft_dynamic/antochanges/so.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
-import 'package:craft_dynamic/model/so.dart';
 import 'package:craft_dynamic/src/network/dynamic_request.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';

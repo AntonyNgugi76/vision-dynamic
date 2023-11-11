@@ -27,6 +27,9 @@ class ModuleItemWidget extends StatelessWidget {
 
       return GestureDetector(
           onTap: () {
+            if(moduleItem.moduleId=='LOANINFORMATION'){
+              Navigator.of(context).push(MaterialPageRoute(builder: (context)=>LoanListScreen()));
+            }
             ModuleUtil.onItemClick(moduleItem, context);
           },
           child: IMenuUtil(getMenuType(), moduleItem).getMenuItem());
