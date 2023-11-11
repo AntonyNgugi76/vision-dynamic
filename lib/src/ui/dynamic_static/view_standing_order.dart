@@ -418,7 +418,7 @@ extension ApiCall on APIService {
     innerMap["MerchantID"] = "STOPSTANDINGINSTRUCTIONS";
     innerMap["ModuleID"] = "STANDINGORDERVIEWDETAILS";
     innerMap["AMOUNT"] = amount;
-    innerMap["BANKACCOUNTID"] = account;
+    innerMap["ACCOUNTID"] = account;
     innerMap["INFOFIELD6"] = startDate;
     innerMap["INFOFIELD7"] = frequency;
     innerMap["INFOFIELD8"] = endDate;
