@@ -305,8 +305,8 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
       title: "Confirm",
       confirmButtonText: "Terminate",
     ).then((value) {
-      Navigator.pop(context);
-      _apiService.terminateStandingOrder();
+      // Navigator.pop(context);
+      _apiService.terminateStandingOrder( standingOrder.creditAccountID, standingOrder.amount,  standingOrder.firstExecutionDate, standingOrder.frequency, standingOrder.lastExecutionDate);
           // .then((value) {
         debugPrint('terminationValue>>>> $value');
         debugPrint('terminationValue>>>> ${value.status}');
@@ -344,13 +344,19 @@ class RowItem extends StatelessWidget {
 }
 
 extension ApiCall on APIService {
-  Future<DynamicResponse> terminateStandingOrder() async {
+  Future<DynamicResponse> terminateStandingOrder(String? account,String? amount, String? startDate,String? frequency,String? endDate) async {
     String? res;
     DynamicResponse dynamicResponse =
         DynamicResponse(status: StatusCode.unknown.name);
     Map<String, dynamic> requestObj = {};
     Map<String, dynamic> innerMap = {};
     innerMap["MerchantID"] = "ADDSTANDINGINSTRUCTIONS";
+    innerMap["MerchantID"] = "ADDSTANDINGINSTRUCTIONS";
+    innerMap["AMOUNT"] = amount;
+    innerMap["BANKACCOUNTID"] = account;
+    innerMap["INFOFIELD6"] = startDate;
+    innerMap["INFOFIELD7"] = frequency;
+    innerMap["INFOFIELD8"] = endDate;
     innerMap["INFOFIELD10"] = "R";
 
     requestObj[RequestParam.Paybill.name] = innerMap;
