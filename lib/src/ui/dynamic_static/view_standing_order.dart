@@ -423,7 +423,10 @@ extension ApiCall on APIService {
     innerMap["INFOFIELD7"] = frequency;
     innerMap["INFOFIELD8"] = endDate;
     innerMap["INFOFIELD10"] = "R";
-    innerMap["PIN"] = CryptLib.encryptField(pin);
+    encryptedPin: CryptLib.encryptField(pin);
+
+    // innerMap["PIN"] = CryptLib.encryptField(pin);
+    // "EncryptedFields":CryptLib.encryptField(pin);
 
     requestObj[RequestParam.Paybill.name] = innerMap;
 
