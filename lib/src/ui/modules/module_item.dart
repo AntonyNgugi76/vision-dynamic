@@ -30,6 +30,9 @@ class ModuleItemWidget extends StatelessWidget {
             if (moduleItem.moduleId == 'LOANINFORMATION') {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => LoanListScreen()));
+            } else if (moduleItem.moduleId == 'LOANHISTORY') {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => LoanRepaymentHistoryList()));
             } else {
               ModuleUtil.onItemClick(moduleItem, context);
             }
