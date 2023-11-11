@@ -134,7 +134,7 @@ class _DynamicTextFormFieldState extends State<DynamicTextFormField> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    formItem = BaseFormInheritedComponent.of(context)?.formItem;
+    formItem = BaseFormInheritedComponent.of(context as BuildContext)?.formItem;
   }
 
   updateControllerText(String value) {
@@ -231,12 +231,12 @@ class _DynamicTextFormFieldState extends State<DynamicTextFormField> {
       }
     }
     if (isObscured) {
-      Provider.of<PluginState>(context, listen: false).addEncryptedFields({
+      Provider.of<PluginState>(context as BuildContext, listen: false).addEncryptedFields({
         "${formItem?.serviceParamId}":
             CryptLib.encryptField(formattedValue.replaceAll(" ", ""))
       });
     } else {
-      Provider.of<PluginState>(context, listen: false)
+      Provider.of<PluginState>(context as BuildContext, listen: false)
           .addFormInput({"${formItem?.serviceParamId}": "$value"});
     }
     return null;
@@ -328,9 +328,9 @@ class _DynamicButtonState extends State<DynamicButton> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    formItem = BaseFormInheritedComponent.of(context)?.formItem;
-    moduleItem = BaseFormInheritedComponent.of(context)?.moduleItem;
-    formKey = BaseFormInheritedComponent.of(context)?.formKey;
+    formItem = BaseFormInheritedComponent.of(context as BuildContext)?.formItem;
+    moduleItem = BaseFormInheritedComponent.of(context as BuildContext)?.moduleItem;
+    formKey = BaseFormInheritedComponent.of(context as BuildContext)?.formKey;
   }
 
   @override
@@ -350,8 +350,8 @@ class _DynamicButtonState extends State<DynamicButton> {
 
   onClick() {
     if (formItem?.controlId == "CLOSE") {
-      Navigator.of(context).pop();
-      Navigator.of(context).pop();
+      Navigator.of(context as BuildContext).pop();
+      Navigator.of(context as BuildContext).pop();
       return;
     }
 
@@ -368,13 +368,13 @@ class _DynamicButtonState extends State<DynamicButton> {
     }
 
     if (formKey?.currentState?.validate()!) {
-      FocusScopeNode currentFocus = FocusScope.of(context);
+      FocusScopeNode currentFocus = FocusScope.of(context as BuildContext);
       if (!currentFocus.hasPrimaryFocus) {
         currentFocus.unfocus();
       }
 
       if (formItem?.controlFormat == ControlFormat.NEXT.name) {
-        Provider.of<PluginState>(context, listen: false).setDeleteForm(false);
+        Provider.of<PluginState>(context as BuildContext, listen: false).setDeleteForm(false);
         CommonUtils.navigateToRoute(
             context: context,
             widget: DynamicWidget(
@@ -383,13 +383,13 @@ class _DynamicButtonState extends State<DynamicButton> {
             ));
         return;
       } else {
-        Provider.of<PluginState>(context, listen: false).setRequestState(true);
+        Provider.of<PluginState>(context as BuildContext, listen: false).setRequestState(true);
         _dynamicRequest
             .dynamicRequest(moduleItem,
                 formItem: formItem,
-                dataObj: Provider.of<PluginState>(context, listen: false)
+                dataObj: Provider.of<PluginState>(context as BuildContext, listen: false)
                     .formInputValues,
-                encryptedField: Provider.of<PluginState>(context, listen: false)
+                encryptedField: Provider.of<PluginState>(context as BuildContext, listen: false)
                     .encryptedFields,
                 context: context,
                 tappedButton: true)
@@ -399,7 +399,7 @@ class _DynamicButtonState extends State<DynamicButton> {
                 tag: "DYNAMIC BUTTON POST CALL",
                 message: "Current status is --->${value?.message}");
             DynamicPostCall.processDynamicResponse(
-                value!.dynamicData!, context, formItem!.controlId!,
+                value!.dynamicData!, context as BuildContext, formItem!.controlId!,
                 moduleItem: moduleItem);
           }
         });
@@ -599,7 +599,7 @@ class _DynamicDropDownState extends State<DynamicDropDown> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<PluginState>(context, listen: false).clearDynamicDropDown();
+      Provider.of<PluginState>(context as BuildContext, listen: false).clearDynamicDropDown();
     });
   }
 
@@ -740,7 +740,7 @@ class _DropDownState extends State<DropDown> {
   initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<PluginState>(context, listen: false).clearDynamicDropDown();
+      Provider.of<PluginState>(context as BuildContext, listen: false).clearDynamicDropDown();
     });
   }
 
@@ -1496,7 +1496,7 @@ class _DynamicCheckBoxState extends State<DynamicCheckBox> {
   }
 
   validate(value) {
-    Provider.of<PluginState>(context, listen: false)
+    Provider.of<PluginState>(context as BuildContext, listen: false)
         .addFormInput({"${formItem?.serviceParamId}": "$value"});
   }
 }
