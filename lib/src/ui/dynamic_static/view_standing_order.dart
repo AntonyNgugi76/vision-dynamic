@@ -369,7 +369,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                       .then((value) {
                     Navigator.pop(context);
                     AlertUtil.showAlertDialog(
-                        context, value.message.toString());
+                        context, value.toString());
                   });
 
                   // Navigator.of(context).pop();
