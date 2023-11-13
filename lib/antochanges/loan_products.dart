@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 CommonSharedPref _sharedPrefs = CommonSharedPref();
 
 
-class LoanListScreen extends StatefulWidget {
-  const LoanListScreen({super.key});
+class LoanProductsScreen extends StatefulWidget {
+  const LoanProductsScreen({super.key});
 
   @override
-  State<LoanListScreen> createState() => _LoanListScreenState();
+  State<LoanProductsScreen> createState() => _LoanProductsScreenState();
 }
 
-class _LoanListScreenState extends State<LoanListScreen> {
+class _LoanProductsScreenState extends State<LoanProductsScreen> {
   final _apiServices = APIService();
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Loan Information'),),
+      appBar: AppBar(title: Text('Loan Products'),),
       body: FutureBuilder(
         future: _apiServices.getLoanProducts(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {

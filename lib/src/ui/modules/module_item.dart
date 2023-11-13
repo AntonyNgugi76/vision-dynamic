@@ -33,7 +33,7 @@ class ModuleItemWidget extends StatelessWidget {
             }
             else if (moduleItem.moduleId == "LOANPRODUCTS") {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => LoanAccounts()));
+                  MaterialPageRoute(builder: (context) => LoanProductsScreen()));
             }
             else {
               ModuleUtil.onItemClick(moduleItem, context);
