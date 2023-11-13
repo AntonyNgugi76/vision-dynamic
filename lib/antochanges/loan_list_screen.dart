@@ -45,7 +45,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
               if (snapshot.hasData) {
                 LoanListItem loanListitem;
                 loanListitem = snapshot.data;
-               var  loans = loanListitem!.lOANINFORMATIONLIST!;
+               var  loans = loanListitem.lOANINFORMATIONLIST!;
                 child = Container(
                   child: ListView.builder(
                     itemCount:2,
