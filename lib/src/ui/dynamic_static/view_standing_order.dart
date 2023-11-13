@@ -371,7 +371,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                       .then((value) {
                       debugPrint('value>>>>>>${value.message}');
                       String? message = value.message;
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
 
                     if (value.status == StatusCode.success.statusCode) {
                       AlertUtil.showAlertDialog(
@@ -381,6 +381,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                           context, message!);
                     }
                   });
+                  Navigator.of(context,rootNavigator: true).pop();
 
                   // Navigator.of(context).pop();
                 }, "Proceed")
