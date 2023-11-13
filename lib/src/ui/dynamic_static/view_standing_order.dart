@@ -359,7 +359,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                 ),
                 SizedBox(height: 10),
                 WidgetFactory.buildButton(context, () {
-                  Navigator.of(context,rootNavigator: true).pop();
+                  // Navigator.of(context,rootNavigator: true).pop();
 
                   _apiService
                       .terminateStandingOrder(
