@@ -354,6 +354,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                     children: [SizedBox(), Text('Enter PIN'), SizedBox()]),
                 SizedBox(height: 10),
                 Pinput(
+                  obscureText: true,
                   controller: controller,
                 ),
                 SizedBox(height: 10),
@@ -371,8 +372,8 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                     Navigator.pop(context);
 
                     if (value.status == StatusCode.success.statusCode) {
-                      // AlertUtil.showAlertDialog(
-                      //     context, '$value.message.toString()'?? '');
+                      AlertUtil.showAlertDialog(
+                          context, '$value.message.toString()'?? '');
                     }else{
                       // AlertUtil.showAlertDialog(
                       //     context, 'Termination has failed');
