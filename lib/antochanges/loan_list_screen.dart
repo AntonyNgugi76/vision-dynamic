@@ -48,7 +48,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                var  loans = loanListitem.lOANINFORMATIONLIST!;
                 child = Container(
                   child: ListView.builder(
-                    itemCount:2,
+                    itemCount:loans.length,
                     itemBuilder: (context, index) {
                       return InkWell(
                           onTap: () {
