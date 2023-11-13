@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:craft_dynamic/antochanges/extensions.dart';
 import 'package:craft_dynamic/antochanges/loan_list_item.dart';
+import 'package:craft_dynamic/antochanges/loan_products_item.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
-CommonSharedPref _sharedPrefs = CommonSharedPref();
 
+CommonSharedPref _sharedPrefs = CommonSharedPref();
 
 class LoanProductsScreen extends StatefulWidget {
   const LoanProductsScreen({super.key});
@@ -16,6 +17,7 @@ class LoanProductsScreen extends StatefulWidget {
 
 class _LoanProductsScreenState extends State<LoanProductsScreen> {
   final _apiServices = APIService();
+
   @override
   void initState() {
     _apiServices.getLoanInfo();
@@ -26,7 +28,9 @@ class _LoanProductsScreenState extends State<LoanProductsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Loan Products'),),
+      appBar: AppBar(
+        title: Text('Loan Products'),
+      ),
       body: FutureBuilder(
         future: _apiServices.getLoanProducts(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -39,16 +43,16 @@ class _LoanProductsScreenState extends State<LoanProductsScreen> {
               snapshot.connectionState == ConnectionState.active) {
             child = Center(
                 child: CircularProgressIndicator(
-                  color: Colors.blue,
-                ));
+              color: Colors.blue,
+            ));
           } else {
             if (snapshot.hasData) {
-              LoanListItem loanListitem;
-              loanListitem = snapshot.data;
-              var  loans = loanListitem.lOANINFORMATIONLIST!;
+              LoanProducts loanProducts;
+              loanProducts = snapshot.data;
+              var loans = loanProducts.lOANPRODUCTS!;
               child = Container(
                 child: ListView.builder(
-                  itemCount:loans.length,
+                  itemCount: loans.length,
                   itemBuilder: (context, index) {
                     return InkWell(
                         onTap: () {
@@ -68,7 +72,7 @@ class _LoanProductsScreenState extends State<LoanProductsScreen> {
                                     left: 10, right: 10, top: 10),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Loan ID:',
@@ -78,7 +82,7 @@ class _LoanProductsScreenState extends State<LoanProductsScreen> {
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Text(loans[index].loanID!),
+                                    Text(loans[index].loanProductID!),
                                   ],
                                 )),
                             Padding(
@@ -86,84 +90,17 @@ class _LoanProductsScreenState extends State<LoanProductsScreen> {
                                     left: 10, right: 10, top: 10),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'OutstandingPrincipal:',
+                                      'Name:',
                                       style: TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
                                     SizedBox(
                                       width: 20,
                                     ),
-                                    Text("${loans[index].outstandingPrincipal.toStringAsFixed(2)},"),
-                                  ],
-                                )),Padding(
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 10, top: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Dispersed Amount:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text("${loans[index].dispersedAmount},"),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 10, top: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-
-                                  // LoanID
-                                  // ,DispersedAmount
-                                  // ,OutstandingPrincipal
-                                  // ,OutstandingInterest
-                                  // ,RepaymentFrequency
-                                  // ,InstallmentAmount
-                                  // ,InstallmentStartDate
-                                  // ,ValueDate
-                                  // ,MaturityDate
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Outstanding Interest:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(
-                                      " ${loans[index].outstandingInterest.toStringAsFixed(2)}",
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(
-                                    left: 10, right: 10, top: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Installment Amount:',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(
-                                      " ${loans[index].installmentAmount.toStringAsFixed(2)}'",
-                                    ),
+                                    Text("${loans[index].loanProductName},"),
                                   ],
                                 )),
                             Padding(
@@ -184,15 +121,8 @@ class _LoanProductsScreenState extends State<LoanProductsScreen> {
           return child;
         },
       ),
-
-
-
     );
   }
 }
 
-
-
-class EmailsList {
-}
-
+class EmailsList {}

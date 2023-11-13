@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:craft_dynamic/antochanges/loan_list_item.dart';
+import 'package:craft_dynamic/antochanges/loan_products_item.dart';
 
 import '../craft_dynamic.dart';
 import 'loan_list_screen.dart';
@@ -48,7 +49,7 @@ extension ApiCall on APIService {
   }
   Future getLoanProducts() async {
     String? res;
-    EmailsList emailList = EmailsList();
+    LoanProducts loanProducts = LoanProducts();
     DynamicResponse dynamicResponse =
     DynamicResponse(status: StatusCode.unknown.name);
     Map<String, dynamic> requestObj = {};
@@ -72,15 +73,15 @@ extension ApiCall on APIService {
           await dioRequestBodySetUp("PAYBILL",
               objectMap: requestObj, isAuthenticate: false),
           route: route);
-      // emailList = EmailsList.fromJson(jsonDecode(res ?? "{}") ?? {});
+      loanProducts = LoanProducts.fromJson(jsonDecode(res ?? "{}") ?? {});
       logger.d("historyList>>: $res");
     } catch (e) {
       // CommonUtils.showToast("Unable to get promotional images");
       AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
-      return emailList;
+      return loanProducts;
     }
 
-    return emailList;
+    return loanProducts;
   }
   Future getLoanAccounts() async {
     String? res;
