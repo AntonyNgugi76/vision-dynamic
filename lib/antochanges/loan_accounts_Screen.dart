@@ -113,8 +113,10 @@ class _LoanRepaymentsState extends State<LoanRepayments> {
                   value: account.id,
                   child: Text(account.name),
                 );
-              }).toList(),
+              })
+                  .toList(),
             ),
+
           ],
         ),
       ),
