@@ -79,14 +79,14 @@ class LOANPRODUCTS {
   LOANPRODUCTS({this.loanProductID, this.loanProductName});
 
   LOANPRODUCTS.fromJson(Map<String, dynamic> json) {
-    loanProductID = json['LoanProductID'];
-    loanProductName = json['LoanProductName'];
+    loanProductID = json['Loan Product ID'];
+    loanProductName = json['Loan Product Name'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['LoanProductID'] = this.loanProductID;
-    data['LoanProductName'] = this.loanProductName;
+    data['Loan Product ID'] = this.loanProductID;
+    data['Loan Product Name'] = this.loanProductName;
     return data;
   }
 }
