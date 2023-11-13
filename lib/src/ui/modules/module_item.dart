@@ -182,6 +182,7 @@ class ModuleUtil {
       CommonUtils.showToast("Coming soon");
       return;
     }
+
     if (moduleItem.isDBCall ?? false) {
       CommonUtils.navigateToRoute(
           context: context,
