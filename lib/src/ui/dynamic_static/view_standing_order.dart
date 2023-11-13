@@ -366,14 +366,16 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                           standingOrder.firstExecutionDate,
                           standingOrder.frequency,
                           standingOrder.lastExecutionDate,
-                          controller.text)
+                          controller.text
+                  )
                       .then((value) {
                       debugPrint('value>>>>>>${value.message}');
-                    Navigator.pop(context);
+                      String? message = value.message;
+                    // Navigator.pop(context);
 
                     if (value.status == StatusCode.success.statusCode) {
                       AlertUtil.showAlertDialog(
-                          context, '$value.message.toString()'?? '');
+                          context, message!);
                     }else{
                       AlertUtil.showAlertDialog(
                           context, 'Termination has failed');
