@@ -62,9 +62,9 @@ class _LoanAccountsState extends State<LoanAccounts> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Display a spinner while fetching data
-            if (bankAccounts.isEmpty)
-              CircularProgressIndicator()
-            else
+            // if (bankAccounts.isEmpty)
+            //   CircularProgressIndicator()
+            // else
             // Display the DropdownButton with the fetched bank accounts
               DropdownButton<String>(
                 value: bankAccounts[0], // Set the default value

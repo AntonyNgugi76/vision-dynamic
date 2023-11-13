@@ -1,3 +1,5 @@
+import 'package:craft_dynamic/antochanges/loan_list_item.dart';
+
 import '../craft_dynamic.dart';
 import 'loan_list_screen.dart';
 
@@ -81,7 +83,7 @@ extension ApiCall on APIService {
   }
   Future getLoanInfo() async {
     String? res;
-    EmailsList emailList = EmailsList();
+    LoanListItem loanListItem = LoanListItem();
     DynamicResponse dynamicResponse =
     DynamicResponse(status: StatusCode.unknown.name);
     Map<String, dynamic> requestObj = {};
@@ -111,10 +113,10 @@ extension ApiCall on APIService {
     } catch (e) {
       // CommonUtils.showToast("Unable to get promotional images");
       AppLogger.appLogE(tag: runtimeType.toString(), message: e.toString());
-      return emailList;
+      return loanListItem;
     }
 
-    return emailList;
+    return loanListItem;
   }
 
 }

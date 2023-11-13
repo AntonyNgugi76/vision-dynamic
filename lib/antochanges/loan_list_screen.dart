@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:craft_dynamic/antochanges/extensions.dart';
+import 'package:craft_dynamic/antochanges/loan_list_item.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
 CommonSharedPref _sharedPrefs = CommonSharedPref();
@@ -42,8 +43,9 @@ class _LoanListScreenState extends State<LoanListScreen> {
                   ));
             } else {
               if (snapshot.hasData) {
-                // emailList = snapshot.data;
-                // emails = emailList!.eMAILLIST!;
+                LoanListItem loanListitem;
+                loanListitem = snapshot.data;
+               var  loans = loanListitem!.lOANINFORMATIONLIST!;
                 child = Container(
                   child: ListView.builder(
                     itemCount:2,
@@ -76,7 +78,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                       SizedBox(
                                         width: 20,
                                       ),
-                                      Text('emails[index].recipient!'),
+                                      Text(loans[index].loanID!),
                                     ],
                                   )),
                               Padding(
@@ -94,7 +96,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                       SizedBox(
                                         width: 20,
                                       ),
-                                      Text("${'emails[index].accountNumber'},"),
+                                      Text("${loans[index].outstandingPrincipal},"),
                                     ],
                                   )),Padding(
                                   padding: EdgeInsets.only(
@@ -111,7 +113,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                       SizedBox(
                                         width: 20,
                                       ),
-                                      Text("${'emails[index].accountNumber'},"),
+                                      Text("${loans[index].dispersedAmount},"),
                                     ],
                                   )),
                               Padding(
@@ -140,7 +142,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                         width: 20,
                                       ),
                                       Text(
-                                        " ${'emails[index].frequency'}",
+                                        " ${loans[index].outstandingInterest}",
                                       ),
                                     ],
                                   )),
@@ -160,7 +162,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                         width: 20,
                                       ),
                                       Text(
-                                        " '{emails[index].'subscribedON'}'",
+                                        " ${loans[index].installmentAmount}'",
                                       ),
                                     ],
                                   )),
