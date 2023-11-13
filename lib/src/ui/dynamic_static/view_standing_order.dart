@@ -376,9 +376,11 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                     if (value.status == StatusCode.success.statusCode) {
                       AlertUtil.showAlertDialog(
                           context, message!);
+                      Navigator.pop(context);
                     }else{
                       AlertUtil.showAlertDialog(
-                          context, 'Termination has failed');
+                          context, message!);
+                      Navigator.pop(context);
                     }
                   });
 
