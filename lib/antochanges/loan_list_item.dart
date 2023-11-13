@@ -2,8 +2,8 @@ class LoanListItem {
   String? status;
   String? message;
   String? formID;
-  int? nextFormSequence;
-  int? backStack;
+  var nextFormSequence;
+  var backStack;
   List<ResultsData>? resultsData;
   List<LOANINFORMATIONLIST>? lOANINFORMATIONLIST;
 
@@ -75,11 +75,11 @@ class ResultsData {
 
 class LOANINFORMATIONLIST {
   String? loanID;
-  int? dispersedAmount;
-  int? outstandingPrincipal;
-  double? outstandingInterest;
+  var dispersedAmount;
+  var outstandingPrincipal;
+  var outstandingInterest;
   String? repaymentFrequency;
-  int? installmentAmount;
+  var installmentAmount;
   String? installmentStartDate;
   String? valueDate;
   String? maturityDate;
