@@ -96,7 +96,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                       SizedBox(
                                         width: 20,
                                       ),
-                                      Text("${loans[index].outstandingPrincipal},"),
+                                      Text("${loans[index].outstandingPrincipal.toStringAsFixed(2)},"),
                                     ],
                                   )),Padding(
                                   padding: EdgeInsets.only(
@@ -142,7 +142,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                         width: 20,
                                       ),
                                       Text(
-                                        " ${loans[index].outstandingInterest}",
+                                        " ${loans[index].outstandingInterest.toStringAsFixed(2)}",
                                       ),
                                     ],
                                   )),
@@ -162,7 +162,7 @@ class _LoanListScreenState extends State<LoanListScreen> {
                                         width: 20,
                                       ),
                                       Text(
-                                        " ${loans[index].installmentAmount}'",
+                                        " ${loans[index].installmentAmount.toStringAsFixed(2)}'",
                                       ),
                                     ],
                                   )),
