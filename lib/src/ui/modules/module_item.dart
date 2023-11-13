@@ -33,7 +33,7 @@ class ModuleItemWidget extends StatelessWidget {
             }
             else if (moduleItem.moduleId == 'LOANHISTORY') {
               Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => LoanRepayments()));
+                  MaterialPageRoute(builder: (context) => LoanAccounts()));
             }
             else {
               ModuleUtil.onItemClick(moduleItem, context);
