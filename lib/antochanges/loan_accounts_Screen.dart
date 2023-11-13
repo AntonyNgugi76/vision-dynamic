@@ -1,3 +1,4 @@
+import 'package:craft_dynamic/antochanges/extensions.dart';
 import 'package:craft_dynamic/antochanges/loan_repayment_history.dart';
 import 'package:craft_dynamic/craft_dynamic.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _LoanAccountsState extends State<LoanAccounts> {
   List<String> bankAccounts = [];
 
   Future<void> fetchData() async {
+    _apiService.getLoanAccounts();
     // Replace 'your_api_endpoint' with the actual API endpoint
     final response = await http.get(Uri.parse('https://your_api_endpoint'));
 
