@@ -7,12 +7,12 @@ import 'package:http/http.dart' as http;
 
 
 
-class BankAccounts extends StatefulWidget {
+class LoanAccounts extends StatefulWidget {
   @override
-  _BankAccountsState createState() => _BankAccountsState();
+  _LoanAccountsState createState() => _LoanAccountsState();
 }
 
-class _BankAccountsState extends State<BankAccounts> {
+class _LoanAccountsState extends State<LoanAccounts> {
   final _apiService = APIService();
   String selectedAccount= '';
   List<String> bankAccounts = [];
