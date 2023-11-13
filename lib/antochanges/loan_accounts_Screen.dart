@@ -13,6 +13,13 @@ class LoanAccounts extends StatefulWidget {
 }
 
 class _LoanAccountsState extends State<LoanAccounts> {
+  List<Map<String, dynamic>> sampleBankAccounts = [
+    {"id": 1, "accountNumber": "123456789", "accountType": "Savings"},
+    {"id": 2, "accountNumber": "987654321", "accountType": "Checking"},
+    {"id": 3, "accountNumber": "456789012", "accountType": "Savings"},
+    // Add more sample bank accounts as needed
+  ];
+
   final _apiService = APIService();
   String selectedAccount= '';
   List<String> bankAccounts = [];
@@ -28,8 +35,9 @@ class _LoanAccountsState extends State<LoanAccounts> {
 
       // Set the bankAccounts list to trigger a rebuild
       setState(() {
-        bankAccounts = dataList;
-      });
+        setState(() {
+          bankAccounts = sampleBankAccounts.map((account) => account['accountNumber'].toString()).toList();
+        });      });
     } else {
       // If the server did not return a 200 OK response,
       // throw an exception.
