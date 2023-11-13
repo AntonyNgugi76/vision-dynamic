@@ -369,7 +369,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                           standingOrder.frequency,
                           standingOrder.lastExecutionDate,
                           controller.text,
-                    standingOrder.sid,
+                    standingOrder.siID,
                     standingOrder.reference,
                   )
                       .then((value) {
