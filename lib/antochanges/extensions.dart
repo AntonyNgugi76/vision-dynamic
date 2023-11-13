@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:craft_dynamic/antochanges/loan_list_item.dart';
 
 import '../craft_dynamic.dart';
@@ -108,7 +110,7 @@ extension ApiCall on APIService {
           await dioRequestBodySetUp("PAYBILL",
               objectMap: requestObj, isAuthenticate: false),
           route: route);
-      // emailList = EmailsList.fromJson(jsonDecode(res ?? "{}") ?? {});
+      loanListItem = LoanListItem.fromJson(jsonDecode(res ?? "{}") ?? {});
       logger.d("loanLisst>>: $res");
     } catch (e) {
       // CommonUtils.showToast("Unable to get promotional images");

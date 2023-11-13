@@ -107,6 +107,14 @@ class LOANINFORMATIONLIST {
     maturityDate = json['MaturityDate'];
   }
 
+  // {"Status":"000","Message":"Loan Informat
+  // ion Created Successfully","FormID":"","NextFormSequence":0,"BackStack":1,"Res
+  // ultsData":[{"ControlID":"GETLOANINFORMATIONLIST","ControlValue":"LOANINFORMAT
+  // ION"}],"LOANINFORMATIONLIST":[{"LoanID":"0001000209","DispersedAmount":200000
+  // .0000,"OutstandingPrincipal":11003000170.0000,"OutstandingInterest":199999.98
+  // 00,"RepaymentFrequency":"M","InstallmentAmount":19009.0000,"InstallmentStartD
+  // ate":"2022-01-01","ValueDate":"2021-12-01","MaturityDate":"2022-12-01"}]}
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['LoanID'] = this.loanID;
