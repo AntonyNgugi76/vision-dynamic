@@ -31,10 +31,10 @@ class ModuleItemWidget extends StatelessWidget {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => LoanListScreen()));
             }
-            // else if (moduleItem.moduleId == 'LOANHISTORY') {
-            //   Navigator.of(context).push(
-            //       MaterialPageRoute(builder: (context) => LoanAccounts()));
-            // }
+            else if (moduleItem.moduleId == "LOANPRODUCTS") {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => LoanAccounts()));
+            }
             else {
               ModuleUtil.onItemClick(moduleItem, context);
             }
