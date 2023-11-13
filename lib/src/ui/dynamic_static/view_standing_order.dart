@@ -359,6 +359,8 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                 ),
                 SizedBox(height: 10),
                 WidgetFactory.buildButton(context, () {
+                  Navigator.of(context,rootNavigator: true).pop();
+
                   _apiService
                       .terminateStandingOrder(
                           standingOrder.creditAccountID,
@@ -366,7 +368,9 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                           standingOrder.firstExecutionDate,
                           standingOrder.frequency,
                           standingOrder.lastExecutionDate,
-                          controller.text
+                          controller.text,
+                    standingOrder.sid,
+                    standingOrder.reference,
                   )
                       .then((value) {
                       debugPrint('value>>>>>>${value.message}');
@@ -381,7 +385,7 @@ class _StandingOrderItemState extends State<StandingOrderItem> {
                           context, message!);
                     }
                   });
-                  Navigator.of(context,rootNavigator: true).pop();
+                  // Navigator.of(context,rootNavigator: true).pop();
 
                   // Navigator.of(context).pop();
                 }, "Proceed")
@@ -413,7 +417,7 @@ class RowItem extends StatelessWidget {
 
 extension ApiCall on APIService {
   Future<DynamicResponse> terminateStandingOrder(
-      account, amount, startDate, frequency, endDate, String pin) async {
+      account, amount, startDate, frequency, endDate, String pin, siId, refrenceNo) async {
     String? res;
     DynamicResponse dynamicResponse =
         DynamicResponse(status: StatusCode.unknown.name);
@@ -423,6 +427,8 @@ extension ApiCall on APIService {
     innerMap["ModuleID"] = "STANDINGORDERVIEWDETAILS";
     innerMap["AMOUNT"] = amount;
     innerMap["ACCOUNTID"] = account;
+    innerMap["INFOFIELD3"] = siId;
+    innerMap["INFOFIELD5"] = refrenceNo;
     innerMap["INFOFIELD6"] = startDate;
     innerMap["INFOFIELD7"] = frequency;
     innerMap["INFOFIELD8"] = endDate;

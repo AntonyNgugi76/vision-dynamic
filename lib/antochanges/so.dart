@@ -80,6 +80,8 @@ class SILIST {
   String? lastExecutionDate;
   String? creditAccountID;
   String? status;
+  String? siID;
+  String? reference;
 
   SILIST(
       {this.amount,
@@ -88,7 +90,7 @@ class SILIST {
         this.firstExecutionDate,
         this.lastExecutionDate,
         this.creditAccountID,
-        this.status});
+        this.status, this.reference, this.siID});
 
   SILIST.fromJson(Map<String, dynamic> json) {
     amount = json['Amount'];
@@ -98,6 +100,8 @@ class SILIST {
     lastExecutionDate = json['Last Execution Date'];
     creditAccountID = json['Credit AccountID'];
     status = json['Status'];
+    reference = json['ReferenceNo'];
+    siID = json['SIID'];
   }
 
   Map<String, dynamic> toJson() {
